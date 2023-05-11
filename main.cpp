@@ -91,33 +91,140 @@ void addCustomerInfo()
    cout << sql << endl;
    executeStatement(sql);
 }
+void addOrderDetails()
+{
+   string customerId, orderNumber;
+   cout << "Enter customer Id: ";
+   cin >> customerId;
+   cout << endl;
+   cout << "Enter order number: ";
+   cin >> orderNumber;
+   string sql = "INSERT INTO 'orderDetails' VALUES (" + customerId + ", " + orderNumber + ");";
+   cout << sql << endl;
+   executeStatement(sql);
+}
+void addOrderItems()
+{
+   string productId, orderId, orderNum;
+   cout << "Enter product ID: ";
+   cin >> productId;
+   cout << "Enter order ID: ";
+   cin >> orderId;
+   cout << "Enter order number: ";
+   cin >> orderNum;
+   string sql = "INSERT INTO 'OrderItems' VALUES (" + productId + ", " + orderId + ", " + orderNum + ");";
+   executeStatement(sql);
+}
+void addPaymentInfo()
+{
+   string paymentId, customerId, CVC, expDate;
+   cout << "Enter payment ID: ";
+   cin >> paymentId;
+   cout << "Enter customer ID: ";
+   cin >> customerId;
+   cout << "Enter CVC code: ";
+   cin >> CVC;
+   cout << "Enter expiration date: ";
+   cin >> expDate;
+   string sql = "INSERT INTO 'paymentInfo' VALUES (" + paymentId + ", " + customerId + ", '" + expDate + "', " + CVC + ");";
+   executeStatement(sql);
+}
+void addProductInfo()
+{
+   string ID, weight, instockNum, cost, itemType;
+   cout << "Enter product ID: ";
+   cin >> ID;
+   cout << "Enter weight: ";
+   cin >> weight;
+   cout << "Enter number of items in stock: ";
+   cin >> instockNum;
+   cout << "Enter cost of each item: ";
+   cin >> cost;
+   cout << "Enter type of item: ";
+   cin >> itemType;
+   string sql = "INSERT INTO 'productInfo' VALUES (" + ID + ", " + weight + ", " + instockNum + ", " + cost + ", '" + itemType + "');";
+   executeStatement(sql);
+}
+
 int customerInfo(string action)
 {
    if (action == "INSERT")
    {
       addCustomerInfo();
    }
+   else if (action == "DELETE")
+   {
+      string id;
+      cout << "Enter customer ID you would like to delete: ";
+      cin >> id;
+      string sql = "DELETE FROM 'customerInfo' WHERE customerId=" + id + ";";
+      executeStatement(sql);
+   }
 
    return 0;
 };
 void orderDetails(string action)
 {
-   cout << "orderDetails " << action << endl;
+   if (action == "INSERT")
+   {
+      addOrderDetails();
+   }
+   else if (action == "DELETE")
+   {
+      string num;
+      cout << "Enter order number you would like to delete: ";
+      cin >> num;
+      string sql = "DELETE FROM 'orderDetails' WHERE orderNumber=" + num + ";";
+      executeStatement(sql);
+   }
 }
 
 void orderItems(string action)
 {
-   cout << "orderItems " << action << endl;
+   if (action == "INSERT")
+   {
+      addOrderItems();
+   }
+   else if (action == "DELETE")
+   {
+      string id;
+      cout << "Enter order product ID you would like to delete: ";
+      cin >> id;
+      string sql = "DELETE FROM 'orderItems' WHERE orderProductId=" + id + ";";
+      executeStatement(sql);
+   }
 }
 
 void paymentInfo(string action)
 {
-   cout << "paymentInfo " << action << endl;
+   if (action == "INSERT")
+   {
+      addPaymentInfo();
+   }
+   else if (action == "DELETE")
+   {
+      string id;
+      cout << "Enter payment ID you would like to delete: ";
+      cin >> id;
+      string sql = "DELETE FROM 'paymentInfo' WHERE paymentId=" + id + ";";
+      executeStatement(sql);
+   }
 }
 
 void productInfo(string action)
 {
-   cout << "productInfo " << action << endl;
+   if (action == "INSERT")
+   {
+      addProductInfo();
+   }
+   else if (action == "DELETE")
+   {
+      string id;
+      cout << "Enter product ID you would like to delete: ";
+      cin >> id;
+      string sql = "DELETE FROM 'productInfo' WHERE productId=" + id + ";";
+      executeStatement(sql);
+   }
 }
 int chooseTable()
 {
@@ -157,10 +264,10 @@ int main()
    case 4:
       customerInfo(action);
       break;
-   case 1:
+   case 2:
       orderDetails(action);
       break;
-   case 2:
+   case 1:
       orderItems(action);
       break;
    case 3:
