@@ -171,6 +171,21 @@ void addOrderItems()
    string sql = "INSERT INTO 'OrderItems' VALUES (" + productId + ", " + orderId + ", " + orderNum + ");";
    executeStatement(sql);
 }
+void updatePaymentInfo()
+{
+   string paymentId, customerId, CVC, expDate;
+   cout << "Enter payment ID that you would like to update: ";
+   cin >> paymentId;
+   cout << "Enter new customer ID: ";
+   cin >> customerId;
+   cout << "Enter new CVC code: ";
+   cin >> CVC;
+   cout << "Enter new expiration date: ";
+   cin >> expDate;
+   string sql = "UPDATE 'paymentInfo' SET customerId = " + customerId + ", CVC = " + CVC + ", expDate = " + expDate + " WHERE paymentId = " + paymentId + ";";
+   executeStatement(sql);
+}
+
 void addPaymentInfo()
 {
    string paymentId, customerId, CVC, expDate;
@@ -199,6 +214,23 @@ void addProductInfo()
    cout << "Enter type of item: ";
    cin >> itemType;
    string sql = "INSERT INTO 'productInfo' VALUES (" + ID + ", " + weight + ", " + instockNum + ", " + cost + ", '" + itemType + "');";
+   executeStatement(sql);
+}
+void updateProductInfo()
+{
+   string ID, weight, instockNum, cost, itemType;
+   cout << "Enter product ID you would like to update: ";
+   cin >> ID;
+   cout << "Enter new weight: ";
+   cin >> weight;
+   cout << "Enter new number of items in stock: ";
+   cin >> instockNum;
+   cout << "Enter new cost of each item: ";
+   cin >> cost;
+   cout << "Enter new type of item: ";
+   cin >> itemType;
+   string sql = "UPDATE 'productInfo' SET weight = " + weight + ", instockNumber = " + instockNum + ", cost = " + cost + ", itemType = '" + itemType + "' WHERE productId = " + ID + ";";
+   cout << sql << endl;
    executeStatement(sql);
 }
 
@@ -279,7 +311,7 @@ void paymentInfo(string action)
    }
    else
    {
-      cout << "Invalid, cannot update" << endl;
+      updatePaymentInfo();
    }
 }
 
@@ -299,7 +331,7 @@ void productInfo(string action)
    }
    else
    {
-      cout << "Invalid, cannot update" << endl;
+      updateProductInfo();
    }
 }
 int chooseTable()
