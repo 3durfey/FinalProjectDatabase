@@ -91,6 +91,38 @@ void addCustomerInfo()
    cout << sql << endl;
    executeStatement(sql);
 }
+void updateCustomerInfo()
+{
+   string stringNames[5] = {"fName", "lName", "StreetAddress", "city", "state"};
+   string firstName, lastName, address, city, state, id;
+   string strings[6];
+   cout << "Enter ID of customer you would like to update: ";
+   while (!(cin >> id))
+   {
+      cout << "Please enter a valid number: ";
+      cin.clear();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+   }
+   for (int x = 0; x < 5; x++)
+   {
+      cout << "Enter value for " << stringNames[x] << ": ";
+      while (!(cin >> strings[x]))
+      {
+         cout << "Please enter a valid string" << endl;
+         cin.clear();
+         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      }
+   }
+   string sql = "UPDATE 'customerInfo' SET " +
+                stringNames[0] + " = '" + strings[0] + "', " +
+                stringNames[1] + " = '" + strings[1] + "', " +
+                stringNames[2] + " = '" + strings[2] + "', " +
+                stringNames[3] + " = '" + strings[3] + "', " +
+                stringNames[4] + " = '" + strings[4] + "' WHERE customerId = " + id + ";";
+   cout << sql << endl;
+   executeStatement(sql);
+}
+
 void addOrderDetails()
 {
    string customerId, orderNumber;
@@ -101,6 +133,17 @@ void addOrderDetails()
    cin >> orderNumber;
    string sql = "INSERT INTO 'orderDetails' VALUES (" + customerId + ", " + orderNumber + ");";
    cout << sql << endl;
+   executeStatement(sql);
+}
+void updateOrderDetails()
+{
+   string customerId, orderNumber;
+   cout << "Enter order number you would like to modify: ";
+   cin >> orderNumber;
+   cout << endl;
+   cout << "Enter new customer Id: ";
+   cin >> customerId;
+   string sql = "UPDATE 'orderDetails' SET customerId =" + customerId + " WHERE orderNumber = " + orderNumber + ";";
    executeStatement(sql);
 }
 void addOrderItems()
@@ -160,6 +203,10 @@ int customerInfo(string action)
       string sql = "DELETE FROM 'customerInfo' WHERE customerId=" + id + ";";
       executeStatement(sql);
    }
+   else
+   {
+      updateCustomerInfo();
+   }
 
    return 0;
 };
@@ -177,6 +224,10 @@ void orderDetails(string action)
       string sql = "DELETE FROM 'orderDetails' WHERE orderNumber=" + num + ";";
       executeStatement(sql);
    }
+   else
+   {
+      updateOrderDetails();
+   }
 }
 
 void orderItems(string action)
@@ -192,6 +243,10 @@ void orderItems(string action)
       cin >> id;
       string sql = "DELETE FROM 'orderItems' WHERE orderProductId=" + id + ";";
       executeStatement(sql);
+   }
+   else
+   {
+      cout << "Invalid, cannot update" << endl;
    }
 }
 
@@ -209,6 +264,10 @@ void paymentInfo(string action)
       string sql = "DELETE FROM 'paymentInfo' WHERE paymentId=" + id + ";";
       executeStatement(sql);
    }
+   else
+   {
+      cout << "Invalid, cannot update" << endl;
+   }
 }
 
 void productInfo(string action)
@@ -224,6 +283,10 @@ void productInfo(string action)
       cin >> id;
       string sql = "DELETE FROM 'productInfo' WHERE productId=" + id + ";";
       executeStatement(sql);
+   }
+   else
+   {
+      cout << "Invalid, cannot update" << endl;
    }
 }
 int chooseTable()
