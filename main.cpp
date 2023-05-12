@@ -146,6 +146,19 @@ void updateOrderDetails()
    string sql = "UPDATE 'orderDetails' SET customerId =" + customerId + " WHERE orderNumber = " + orderNumber + ";";
    executeStatement(sql);
 }
+void updateOrderItems()
+{
+   string productId, orderProductId, orderNum;
+   cout << "Enter order product ID you would like to modify: ";
+   cin >> orderProductId;
+   cout << "Enter new product ID: ";
+   cin >> productId;
+   cout << "Enter new order number: ";
+   cin >> orderNum;
+   string sql = "UPDATE 'orderItems' SET productId = " + productId + ", orderNumber = " + orderNum + " WHERE orderProductId = " + orderProductId + ";";
+   executeStatement(sql);
+}
+
 void addOrderItems()
 {
    string productId, orderId, orderNum;
@@ -246,7 +259,7 @@ void orderItems(string action)
    }
    else
    {
-      cout << "Invalid, cannot update" << endl;
+      updateOrderItems();
    }
 }
 
